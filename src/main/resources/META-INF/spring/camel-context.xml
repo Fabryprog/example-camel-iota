@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+     	<from uri="mqtt://test?host=tcp://test.mosquitto.org:1883&amp;subscribeTopicName=fabryprog-iota/test"/>
+		
+		<setHeader headerName="CamelIOTASeed">
+		  	<constant>9HIAWQJHGOPQVPWNCLKNVVMZZCUJXGUXYGJQNVXMWWUWXZUVQDBVAWBEGBPHWMXSYECPGZMJMNYHLQMVN</constant>
+		</setHeader>
+		
+		<setHeader headerName="CamelIOTAValue">
+		  	<constant>0</constant>
+		</setHeader>
+  
+		<setHeader headerName="CamelIOTAToAddress">
+		  	<constant>LXQHWNY9CQOHPNMKFJFIJHGEPAENAOVFRDIBF99PPHDTWJDCGHLYETXT9NPUVSNKT9XDTDYNJKJCPQMZCCOZVXMTXC</constant>
+		</setHeader>
+		<to uri="iota://fabryprog-iota?url=https://nodes.thetangle.org:443&amp;tag=APACHECAMELIOTA&amp;operation=sendTransfer&amp;depth=3" />
+    </route>
+  </camelContext>
+
+</beans>
